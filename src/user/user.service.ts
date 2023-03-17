@@ -34,12 +34,18 @@ const saltrounds=10;
 
 
 
-  async findAll(email:string) {
-    if(email){
-      return await this.prisma.user.findFirst({where:{email :email}});
-    }
-const list= await this.prisma.user.findMany();
-    return list;
+  async findAll(email:string, password:string) {
+   
+     const User= await this.prisma.user.findFirst({where:{email :email}});
+     if(!User){
+      return 'user not found';
+     }
+    
+const result= await bcrypt.compare(password,User.password);
+if(!result){
+  return 'password incorrect';
+}
+    return "successful";
 
   }
  
