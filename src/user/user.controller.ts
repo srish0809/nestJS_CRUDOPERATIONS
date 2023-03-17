@@ -14,10 +14,12 @@ export class UserController {
   }
 
   @ApiQuery({name:'email',required:false})
+  @ApiQuery({name:'password',required:false})
   @Get()
-  async findAll(@Query('email')email:string) {
-    return await this.userService.findAll(email);
+  async findAll(@Query('email') email: string, @Query('password') password: string) {
+    return await this.userService.findAll(email, password);
   }
+  
 
   @Get(':id')
   findOne(@Param('id') id: string) {
